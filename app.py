@@ -6,7 +6,7 @@ from sklearn.model_selection import train_test_split
 from sklearn import preprocessing
 from flask import Flask, request
 from collections import OrderedDict
-import json
+
 
 app = Flask(__name__)
 
@@ -25,7 +25,6 @@ def classificator(data_frame):
 @app.route('/analyze', methods=['POST'])
 def analyze():
     # read data
-    # data = pd.read_csv('~/Downloads/WA_Fn-UseC_-Telco-Customer-Churn.csv')
     data = pd.read_csv(request.files['file'])
 
     # prepare data
@@ -67,13 +66,12 @@ def analyze():
     accuracy = metrics.accuracy_score(y_test, prediction_test)
 
     # return results
-    info = {
+    result = {
         'Accuracy': accuracy,
         'Weights': weights
     }
-    #result = json.dumps(info, indent=4)
 
-    return info
+    return result
 
 
 if __name__ == '__main__':
