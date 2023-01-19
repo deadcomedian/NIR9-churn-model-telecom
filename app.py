@@ -1,3 +1,4 @@
+# add this line to test webhook
 # import libs
 import pandas as pd
 from sklearn import metrics
@@ -61,6 +62,7 @@ def analyze():
     weights = pd.Series(model.coef_[0], index=X.columns.values)
     weights = weights.sort_values(ascending=False)
     weights = weights.to_dict(OrderedDict)
+    weights = sorted(weights.items(), key=lambda x: -x[1])
 
     # obtain accuracy
     accuracy = metrics.accuracy_score(y_test, prediction_test)
@@ -75,4 +77,4 @@ def analyze():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True,host='0.0.0.0')
